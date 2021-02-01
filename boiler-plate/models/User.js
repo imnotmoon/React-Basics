@@ -54,9 +54,32 @@ userSchema.pre('save', function(next) {
             })
 
         })
+    } else {
+        next();
     }
 })
 // 이게 끝나면 save를 호출
+
+
+// 난또 메소드가 있는줄알았는데 새로 만들어야되네
+
+// mongoose.Schema 클래스의 메소를 정의하는 부분
+userSchema.methods.comparePassword = function(plainPassword, callback) {
+
+    // plainPassword를 암호화해서 db의 비밀번호와 같은지 확인
+    // 오 암호화를 저 위에 코드대로 새로 안해도 편한방법이 있음
+    bcrypt.compare(plainPassword, this.password, (err, isMatched) => {
+        if(err) return callback(err);
+
+        callback(null, isMatched)
+    })
+}
+
+userSchema.methods.generateToken = function(callback) {
+    
+}
+
+
 
 // schema를 모델로 감싸준다
 const User = mongoose.model('User', userSchema)
