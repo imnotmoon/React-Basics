@@ -38,7 +38,8 @@ app.post('/register', (req, res) => {
 
     // body-parser가 있어서 가능
     const user = new User(req.body);
-    console.log(user);
+    // 비밀번호 암호화 : user.js의 pre를 거침
+
     user.save((err, doc) => {
         if(err) return res.json({ success : false, err})
         
