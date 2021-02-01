@@ -3,9 +3,10 @@
 
 var express = require('express')
 var app = express()
-var password = require('./password.js')
 const bodyParser = require('body-parser');
 const {User} = require('./models/User');
+
+const config = require('./config/key');
 
 // body-parser settings
 
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 
 // Mongoose Database Initialize
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://imnotmoon:' + password + '@boiler-plate.ph5gj.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+mongoose.connect(config.mongoURI, {
     useNewUrlParser : true, 
     useUnifiedTopology : true, 
     useCreateIndex : true, 
