@@ -92,6 +92,22 @@ userSchema.methods.generateToken = function(callback) {
     })
 }
 
+userSchema.statics.findByToken = function(token, callback) {
+    var user = this;
+
+    // 가져온 토큰을 복호화 하는 과정
+    jwt.verify(token, 'secretToken', function(err, decoded) {
+        
+        // decode된거 : user._id
+        // 유저아이디를 이용해서 유저를 찾은 다음
+        // 클라이언트에서 가져온 토큰과 DB에 보관된 토큰이 일치하는지 확인
+
+        user.findOne({ "_id" : decoded, "token" : token }, function(err, user) {
+            if(err) return callback(err);
+            callback(null, user);
+        })
+    })
+}
 
 
 // schema를 모델로 감싸준다

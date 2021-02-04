@@ -6,6 +6,7 @@ var app = express()
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const {User} = require('./models/User');
+const { auth } = require('./middleware/auth');
 
 const config = require('./config/key');
 
@@ -34,7 +35,7 @@ mongoose.connect(config.mongoURI, {
 
 
 // 회원가입을 위한 라우트
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
     
     // 회원 가입할때 필요한 정보들을 client에서 가져오면
     // 그것들을 데이터베이스에 넣어준다.
@@ -54,7 +55,7 @@ app.post('/register', (req, res) => {
     });
 })
 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
 
     // 1. DB안에서 요청된 email 찾기
     User.findOne({ email : req.body.email }, (err, user) => {
@@ -88,14 +89,37 @@ app.post('/login', (req, res) => {
         })
 
     })
-
-    
-
-
-    
-
-
 })
+
+// Auth의 필요성 : 
+// 로그인된 유저만 접근 가능한 페이지가 있음. 이를 분리하기 위해서
+
+// 토큰을 클라이언트 -> 쿠키 / 서버 -> DB에 넣어줬음
+// 이들이 일치하는지 계속 체크해야함
+// 1. 클라이언트의 쿠키를 서버에 전달(쿠키가 encode 되어있는 상태)
+// 2. decode하면 user_id가 나옴. 복호화
+
+// auth : middleware. 콜백을 보내기 전에 중간에 거치는거
+app.get('/api/users/auth', auth, (req, res) => {
+
+    // 여기까지 미들웨어를 통과해왔다는 얘기는 Authentication이 True라는 뜻.
+    // auth에서 req에 유저객체와 복호화된 토큰으 넣어줫기 때문에 req.user로 접근이 가능하다
+    res.status(200).json({
+        _id : req.user._id,
+        // 0이면 일반유저 / 1이면 Admin
+        isAdmin : req.user.role == 0 ? false : true,
+        isAuth : true,
+        email : req.user.email,
+        name : req.user.name,
+        lastname : req.user.lastname,
+        role : req.user.role,
+        image : req.user.image
+    })
+
+
+    // 실패할 경우 auth middleware에서 실패 response를 던짐
+})
+
 
 
 app.get('/', function (req, res) {
