@@ -33,6 +33,7 @@ class App extends React.Component {
   //! setState()가 불려지면 자동으로 render()가 호출된다.
   render() {
     // 리턴 안에는 하나의 component만 들어간다. 이제 이해함
+    console.log("i am rendering");
     return (
       <div>
         <h1>The number is : {this.state.count}</h1>
@@ -41,6 +42,33 @@ class App extends React.Component {
       </div>
     );
   }
+
+
+
+
+  // 2. Life Cycle
+  constructor(props) {
+    super(props)
+    console.log("hello");
+  }
+
+  // render()가 끝난 직후에 호출됨
+  // Mount : 시작
+  componentDidMount() {
+    console.log("component rendered");
+  }
+
+  // update가 일어난 직후에 호출됨
+  componentDidUpdate() {
+    console.log("I just updated");
+  }
+
+  // 다른 페이지로 가거나.. component가 unmount될때 발생
+  // Unmount : 종료
+  componentWillUnmount() {
+    console.log("goodbye, cruel world!")
+  }
+
 }
 
 export default App;
