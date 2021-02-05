@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "create-react-app": "^4.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.11.14"
   },
