@@ -4,6 +4,7 @@
 var express = require('express')
 var app = express()
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const {User} = require('./models/User');
 
 const config = require('./config/key');
@@ -12,8 +13,10 @@ const config = require('./config/key');
 
 // application/x-www-form-urlencoded 데이터를 분석해서 가져올 수 있도록 세팅
 app.use(bodyParser.urlencoded({extended : true}));
+
 // application/json
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 // Mongoose Database Initialize
@@ -61,7 +64,7 @@ app.post('/login', (req, res) => {
                 message : "제공된 이메일에 해당하는 유저가 없습니다"
             })
         }
-
+ 
         // 2. 요청한 이메일이 있다면, 비밀번호가 일치하는지 확인
         user.comparePassword(req.body.password, (err, isMatch) => {
             if(!isMatch) return res.json({
@@ -71,7 +74,16 @@ app.post('/login', (req, res) => {
             
             // 3. 그 유저를 위한 토큰을 생성
             user.generateToken((err, user) => {
-                
+                if(err) return res.status(400).send(err);
+
+                // 토큰을 저장한다. 쿠키에 보관할수도 / 로컬 스토리지에 보관할수도 => 일단은 쿠키에 저장하기로
+                res.cookie("x_auth", user.token)
+                .status(200)
+                .json({
+                    loginSuccess : true,
+                    userId : user._id
+                });
+
             })
         })
 

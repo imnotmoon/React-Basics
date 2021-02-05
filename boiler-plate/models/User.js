@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const userSchema = mongoose.Schema({
     name : {
         type : String,
@@ -24,10 +25,13 @@ const userSchema = mongoose.Schema({
         type : Number,
         default : 0
     },
+
     image : String,
+
     token : {
         type : String
     },
+
     tokenExp : {
         type : Number
     }
@@ -68,15 +72,24 @@ userSchema.methods.comparePassword = function(plainPassword, callback) {
 
     // plainPassword를 암호화해서 db의 비밀번호와 같은지 확인
     // 오 암호화를 저 위에 코드대로 새로 안해도 편한방법이 있음
-    bcrypt.compare(plainPassword, this.password, (err, isMatched) => {
+    bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
         if(err) return callback(err);
 
-        callback(null, isMatched)
+        callback(null, isMatch)     // error가 null이고...
     })
 }
 
 userSchema.methods.generateToken = function(callback) {
     
+    var user = this;
+
+    // jsonwebtoken을 이용해서 token을 생성하기
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
+    user.token = token;
+    user.save(function(err, user) {
+        if(err) return callback(err);
+        callback(null, user);
+    })
 }
 
 
