@@ -116,8 +116,30 @@ app.get('/api/users/auth', auth, (req, res) => {
         image : req.user.image
     })
 
-
     // 실패할 경우 auth middleware에서 실패 response를 던짐
+})
+
+
+// logout
+// 로그아웃 하려는 유저를 DB에서 찾아서
+// 그 유저의 토큰을 지워준다 ********
+
+// -> 로그인할때 토큰이 생겨서 클라이언트의 쿠키에 들어가고
+// -> auth가 필요한 경우 클라이언트의 쿠키와 서버의 DB에서 토큰을 대조
+// -> 로그아웃하면 DB에서 토큰을 지운다
+app.get('/api/users/logout', auth, (req, res) => {
+    
+    // 유저 모델을 가져와서 로그아웃하려는 모델을 찾음
+    // param1 : find할 조건
+    // param2 : update할 내용
+    // param3 : callback
+    User.findOneAndUpdate({_id : req.user._id}, 
+        { token : ""}, (err, user) => {
+            if(err) return res.json({ success: false, err })
+            return res.status(200).send({
+                success : true
+            })
+        })
 })
 
 
