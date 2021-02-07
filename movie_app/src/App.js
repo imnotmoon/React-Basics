@@ -1,40 +1,21 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import Movie from './Movie'
-import "./App.css"
+import React from 'react'
+import { HashRouter, Route } from "react-router-dom"
+import About from "./routes/About"
+import Home from './routes/Home'
 
-export default class App extends Component {
+function App() {
+  return (
+    <HashRouter>
 
-  state = {
-    isLoading : true,
-    movies : []     // 미리 선언 안하고 나중에 추가해도 되긴 하는데 그냥 하는거.
-  }
+      {/* HashRouter는 위에서부터 쭉 돌면서 매칭되는 urlpattern에 해당되는걸 싹다 render */}
+      {/* 그래서 /와 /about은 동시에 렌더링된다. */}
+      <Route path="/" component={Home} />
+      <Route path="/home" component={Home} />
 
-  // Movie App에서 사용할 Life Cycle 설계
-  getMovies = async() => {
-    const {data: {data : {movies}}} = await axios.get("https://yts.mx/api/v2/list_movies.json?sort_by=rating");
-    this.setState({ movies, isLoading:false })
-  }
 
-  componentDidMount() {
-    this.getMovies();
-  }
-
-  render() {
-    const {isLoading, movies} = this.state;
-    return (
-      <section className="container">
-        {isLoading ? <div className="loader"><span className="loader__text">
-            Loading...
-          </span></div> 
-        : (
-          <div className="movies">
-            {movies.map(movie => (
-              <Movie key={movie.id} year={movie.year} title={movie.title} summary={movie.summary} poster={movie.medium_cover_image} genres={movie.genres} />
-            ))}
-            </div>
-        )}
-      </section>
-    )
-  }
+      <Route path="/about" component={About} />
+    </HashRouter>
+  )
 }
+
+export default App
