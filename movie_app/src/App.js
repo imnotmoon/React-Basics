@@ -18,6 +18,9 @@ function App() {
       {/* <Route path="/home" component={Home} /> */}
       <Route path="/about" component={About} />
       <Route path="/movie-detail" component={Detail} />
+
+      {/* id 변수를 가지고 이렇게도 할 수 있음 */}
+      {/* <Route path="/movie/:id" component={Detail} /> */}
     </HashRouter>
   )
 }
