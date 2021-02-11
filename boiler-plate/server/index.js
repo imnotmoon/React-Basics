@@ -65,7 +65,7 @@ app.post('/api/users/login', (req, res) => {
                 message : "제공된 이메일에 해당하는 유저가 없습니다"
             })
         }
- 
+
         // 2. 요청한 이메일이 있다면, 비밀번호가 일치하는지 확인
         user.comparePassword(req.body.password, (err, isMatch) => {
             if(!isMatch) return res.json({
@@ -145,7 +145,7 @@ app.get('/api/users/logout', auth, (req, res) => {
 
 
 app.get('/', function (req, res) {
-  res.send('hello world')
+    res.send('hello world')
 })
 
-app.listen(3000, () => console.log("Example app listening on port 3000"))
+app.listen(5000, () => console.log("Example app listening on port 3000"))
