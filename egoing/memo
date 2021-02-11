@@ -120,3 +120,18 @@ onChangePage=
 원래의 컴포넌트에서는 그 함수를 실행시켜주기만 하면 된다.
 이벤트 객체에는 target이 있음. 어떤 태그에서 이벤트가 발생했는지 알려준다.
     => 태그마다 아이디가 존재한다면 그 아이디에 접속해 인덱스나 변수를 알아낼 수 있다. 
+
+
+
+#### create ####
+복습
+개별 컴포넌트 클래스 내부에서는 동적으로 props 변경이 금지되어있다.
+컴포넌트 밖에서(상위)에서 props를 바꾸는 것은 가능하다. (read-only)
+
+상위 컴포넌트가 하위 컴포넌트로 값을 전달할때는 props를 조작하면 된다.
+하위 컴포넌트가 상위 컴포넌트의 값을 바꾸려 할때는 props는 안됨. 그래서 event를 통해서 한다.
+ex) App -> TOC : data props를 통해 전달.
+    TOC -> App : App의 selected_content_id를 바꾸려 할때는 event를 통해서 전달.
+                    onClick()이 자신의 id를 전달해서 상위 컴포넌트에서 setState().
+Redux? 데이터를 저장하는 하나의 통합 객체를 두고... // 아마 Swift의 Notification Center와 유사한듯.
+

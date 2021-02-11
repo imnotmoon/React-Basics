@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import TOC from './components/TOC';
-import Content from './components/Content'
+import ReadContent from './components/ReadContent'
+import CreateContent from './components/CreateContent'
 import Subject from './components/Subject'
+import Control from './components/Control'
 
 
 export default class App extends Component {
@@ -14,8 +16,10 @@ export default class App extends Component {
     // Subject라고 하는 태그에 props값으로 준 것.
     // 상위 컴포넌트인 App의 상태를 하위 컴포넌트로 전달하고 싶을 때 사용
     //! App.state -> Subject.props
+    this.max_content_id = 3;   // ui에 영향을 줄 이유가 하나도 없다. 불필요한 렌더링. 그래서 밖으로 뺐다.
+
     this.state = {
-      mode : 'welcome',
+      mode : 'create',
       welcome : {title : 'welcome', desc: 'hello, React!'},
       subject: {title : 'Web', sub: 'World Wide Web'},
       
@@ -31,18 +35,43 @@ export default class App extends Component {
   }
 
   render() {
-    var _title, _desc = null;
+    var _title, _desc, _article = null;
 
     if(this.state.mode === 'welcome') {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
+      _article = <ReadContent title={_title} desc={_desc}/>
     } else if(this.state.mode === 'read') {
       this.state.contents.forEach((data) => {
         if(data.id === this.state.selected_content_id) {
           _title = data.title;
           _desc = data.desc;
+          _article = <ReadContent title={_title} desc={_desc}/>
         }
       })
+    } else if(this.state.mode === 'create') {
+      _article = <CreateContent onSubmit={function(_title, _desc) {
+        // 여기서 setState()를 통해서 content에 새로운 인자를 추가
+        console.log(_title, _desc)
+
+        // setState() 안에 바꿀 내용을 넣었는데 그냥 간편하게 append 할 수는 없나
+        this.max_content_id += 1;
+        // 방법 1 : 푸시. 원본을 바꾼다. 비추천. 성능이 안좋아질 수 있다.
+        //* this.state.contents.push({id: this.max_content_id, title : _title, desc : _desc});
+        //* this.setState({
+        //*   contents : this.state.contents
+        //* });
+        //! 방법 2 : concat. 원래 배열에서 카피해 새로운 배열을 만든 다음 원소를 추가한 후 대입. 원본을 바꾸지 않는다.
+        this.setState({
+          // 새 배열로 교체.
+          contents : this.state.contents.concat({
+            id : this.max_content_id, 
+            title : _title,
+            desc : _desc
+          })
+        })
+
+      }.bind(this)}/>
     }
 
     return (
@@ -52,7 +81,7 @@ export default class App extends Component {
         onChangePage={function() {
           if(this.state.mode === 'welcome') {
             this.setState({mode : 'read'})
-          } else {
+          } else if(this.state.mode === 'read') {
             this.setState({mode : 'welcome'})
           }
         }.bind(this)}/>
@@ -75,7 +104,13 @@ export default class App extends Component {
             selected_content_id: Number(id)
           })
         }.bind(this)}/>
-        <Content title={_title} desc={_desc}/>
+        <Control onChangeMode={function(_mode) {
+          this.setState({mode : _mode})
+        }.bind(this)}/>
+
+
+        {/* mode값에 따라서 ReadContent / CreateContent로 변환 */}
+        {_article}
       </div>
     )
   }
