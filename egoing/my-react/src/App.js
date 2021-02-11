@@ -41,7 +41,8 @@ export default class App extends Component {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}/>
-    } else if(this.state.mode === 'read') {
+    } 
+    else if(this.state.mode === 'read') {
       this.state.contents.forEach((data) => {
         if(data.id === this.state.selected_content_id) {
           _title = data.title;
@@ -56,12 +57,20 @@ export default class App extends Component {
 
         // setState() 안에 바꿀 내용을 넣었는데 그냥 간편하게 append 할 수는 없나
         this.max_content_id += 1;
-        // 방법 1 : 푸시. 원본을 바꾼다. 비추천. 성능이 안좋아질 수 있다.
+        //! 방법 1 : 푸시. 원본을 바꾼다. 비추천. 성능이 안좋아질 수 있다.
+        
+        // 원본을 바꾸는건
+        // shoudComponentUpdate를 호출할때 this.state.props와 newProps가 같아져서
+        // 이 메소드를 못씀
+        // => render()를 호출할 조건을 설정할 수 없음
+        // => 성능 향상의 여지가 없다.
+
         //* this.state.contents.push({id: this.max_content_id, title : _title, desc : _desc});
         //* this.setState({
         //*   contents : this.state.contents
         //* });
         //! 방법 2 : concat. 원래 배열에서 카피해 새로운 배열을 만든 다음 원소를 추가한 후 대입. 원본을 바꾸지 않는다.
+        //! IMMUTABLE : 원본을 바꾸지 않아서 !//
         this.setState({
           // 새 배열로 교체.
           contents : this.state.contents.concat({
@@ -70,6 +79,8 @@ export default class App extends Component {
             desc : _desc
           })
         })
+
+        // 객체의 원소 추가는 Object.assign({}, obj)
 
       }.bind(this)}/>
     }

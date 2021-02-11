@@ -135,3 +135,10 @@ ex) App -> TOC : data props를 통해 전달.
                     onClick()이 자신의 id를 전달해서 상위 컴포넌트에서 setState().
 Redux? 데이터를 저장하는 하나의 통합 객체를 두고... // 아마 Swift의 Notification Center와 유사한듯.
 
+왜 push보다 concat이 더 빠른가?
+성능향상을 위해 shouldComponentUpdate() 메소드를 쓸 수 있는데
+이 메소드는 기존의 props/state값과 newProps/newState 값을 비교해서 render()여부를 결정할 수 있음.
+근데 push해서 원본을 바꾸는 식으로 코드를 짜면 이 함수를 못쓴다. props와 newProps가 같아져서.
+그래서 concat을 통한 원본 복제 후 setState가 유리하다.
+
+concat, assign, from은 Deep Copy인듯. 값을 모두 복사하지만 같은 객체는 아니게됨.
