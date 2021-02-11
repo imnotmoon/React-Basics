@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TOC from './components/TOC';
 import ReadContent from './components/ReadContent'
 import CreateContent from './components/CreateContent'
+import UpdateContent from './components/UpdateContent'
 import Subject from './components/Subject'
 import Control from './components/Control'
 
@@ -19,7 +20,7 @@ export default class App extends Component {
     this.max_content_id = 3;   // ui에 영향을 줄 이유가 하나도 없다. 불필요한 렌더링. 그래서 밖으로 뺐다.
 
     this.state = {
-      mode : 'create',
+      mode : 'welcome',
       welcome : {title : 'welcome', desc: 'hello, React!'},
       subject: {title : 'Web', sub: 'World Wide Web'},
       
@@ -34,7 +35,7 @@ export default class App extends Component {
     }
   }
 
-  render() {
+  getContent() {
     var _title, _desc, _article = null;
 
     if(this.state.mode === 'welcome') {
@@ -58,13 +59,11 @@ export default class App extends Component {
         // setState() 안에 바꿀 내용을 넣었는데 그냥 간편하게 append 할 수는 없나
         this.max_content_id += 1;
         //! 방법 1 : 푸시. 원본을 바꾼다. 비추천. 성능이 안좋아질 수 있다.
-        
         // 원본을 바꾸는건
         // shoudComponentUpdate를 호출할때 this.state.props와 newProps가 같아져서
         // 이 메소드를 못씀
         // => render()를 호출할 조건을 설정할 수 없음
         // => 성능 향상의 여지가 없다.
-
         //* this.state.contents.push({id: this.max_content_id, title : _title, desc : _desc});
         //* this.setState({
         //*   contents : this.state.contents
@@ -77,14 +76,49 @@ export default class App extends Component {
             id : this.max_content_id, 
             title : _title,
             desc : _desc
-          })
+          }),
+          mode : 'read',
+          selected_content_id : this.max_content_id
         })
 
         // 객체의 원소 추가는 Object.assign({}, obj)
 
       }.bind(this)}/>
+    } else if(this.state.mode === 'update') {
+      var _content = {};
+      this.state.contents.forEach((data) => {
+        if(data.id == this.state.selected_content_id) {
+          _content = data;
+        }
+      })
+      _article = <UpdateContent data={_content} onSubmit = {
+        // 인자는 컴포넌트에서 채워서 얘를 호출할것.
+        function(_id, _title, _desc) {
+          // 업데이트된 인자를 받아와서 state를 수정
+          // 복제해서 새로운 배열을 만듦.
+          var _content = Array.from(this.state.contents);
+          var i=0;
+          while(i<_content.length) {
+            if(_content[i].id === _id) {
+              _content[i] = {id : _id, title: _title, desc : _desc}
+            }
+            i += 1;
+          }
+          this.setState({
+            // 수정된 _content로 set state.
+            contents: _content, 
+            mode : 'read'
+          })
+      }.bind(this)}/>
+    } else if(this.state.mode === 'delete') {
+      
     }
 
+    return _article
+  }
+
+  render() {
+    
     return (
       <div className="App">
         <Subject title={this.state.subject.title} sub={this.state.subject.sub}
@@ -116,12 +150,29 @@ export default class App extends Component {
           })
         }.bind(this)}/>
         <Control onChangeMode={function(_mode) {
-          this.setState({mode : _mode})
+          if(_mode === 'delete') {
+            if(window.confirm('???')) {
+              var _contents = Array.from(this.state.contents)
+              this.state.contents.forEach((content) => {
+                if(content.id === this.state.selected_content_id){
+                  _contents.splice(_contents.indexOf(content), 1)
+                  console.log(_contents)
+                }
+              })
+              this.setState({
+                mode : 'welcome',
+                contents : _contents
+              })
+              alert("DELETEED")
+            }
+          } else {
+            this.setState({mode : _mode})
+          }
         }.bind(this)}/>
 
 
         {/* mode값에 따라서 ReadContent / CreateContent로 변환 */}
-        {_article}
+        {this.getContent()}
       </div>
     )
   }
