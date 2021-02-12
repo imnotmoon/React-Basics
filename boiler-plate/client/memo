@@ -34,3 +34,39 @@ IP를 바꿈으로써 더 나은 보안을 제공
 외에 다른 특별한 기능은 없다.
 
 
+#### Redux ####
+predictable state container for JS apps.
+state 관리 라이브러리.
+props vs. state
+    Props : 컴포넌트간에 데이터 이동은 prop. 위에서 아래로만 보낼수가 있다.
+            부모 -> 자식한테 1을 주면 자식에서는 props 1이 변할 수 없다. (IMMUTABLE)
+    State : 그냥 그 컴포넌트 안에서 데이터를 이동하거나 전달하려 할 때.
+            그냥 이 안에서도 충분히 State를 변하게 할 수 있다. (MUTABLE).
+            State가 변하면 re-rendering되는 성격도 갖고 있다.
+            Object로 보관
+    => Redux manages State.
+
+iOS의 NotificationCenter랑 비슷한거 맞네..
+컴포넌트와 별개로 Store를 하나 만든 다음 Store를 데이터 허브처럼 사용.
+
+Redux의 데이터 플로우
+1. 컴포넌트에서(Dispatch)
+2. Action
+    객체. 무엇이 일어났는지를 설명하는 객체
+    {type : 'LIKE_ARTICLE', article_Id : 42}
+3. Reducer
+    이전 state와 action object를 받은 후 next state를 리턴한다.
+    action에 의해 어떻게 변할지를 여기서 처리
+4. Store
+    전체적인 app의 state를 감싸주는 역할.
+    여러가지 많은 메소드들이 있고. 이걸 이용해서 state를 관리할 수 있음.
+5. 컴포넌트(Subscribe)
+
+!! 철저하게 한 방향으로만 흐른다 !!
+
+리덕스의 state를 바꾸기 위한 유일한 방법은 Dispatch
+Store에서 받을 수 있는 객체 형식은 Action.
+미들웨어 라이브러리를 추가로 받으면 Function / Promise도 받을 수 있게 된다.
+redux-promise와 redux-thunk는 리덕스를 더 잘 사용할 수 있게 도와주는 미들웨어다.
+
+
