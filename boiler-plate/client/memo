@@ -70,3 +70,29 @@ Store에서 받을 수 있는 객체 형식은 Action.
 redux-promise와 redux-thunk는 리덕스를 더 잘 사용할 수 있게 도와주는 미들웨어다.
 
 
+#### Hooks ####
+기본적인 리액트 컴포넌트는 Class component / Functional component 이렇게 두가지
+Class Component 
+    더 많은 기능들을 사용 가능.
+    대신 코드가 더 길어지고 복잡해지고 성능적인 면에서 손해
+Functional Component
+    제공하는 기능들이 한정적인 반면 코드가 짧고 간단.
+    성능은 클래스 컴포넌트보다는 좋다.
+
+Functional component에서 쓰지 못하는 기능들?
+1. lifecycle(constructor, ...) - functional component에서는 아무것도 쓸 수 없다.
+    constructor() : state 부여
+    render() : jsx(유사html). DOM에 알맞게 컴포넌트를 넣어주는것. 렌더링
+    componentDidMount() : 데이터를 가져오거나 뭐 그런..
+    (업데이트)
+    componentDidUpdate()
+    (제거)
+    componentWillUnmount()
+2. React Hooks 이후로는 functional 컴포넌트에서도 다 쓸 수 있어서 좋아진것.
+
+useState, useEffect를 통해서 함수형 컴포넌트를 클래스 컴포넌트와 똑같이 작성할 수 있다.
+대신 성능은 더 좋지.
+
+대충 이렇게 생각하면 된다.
+constructor() == useState()
+componentDidMount() == useEffect()
