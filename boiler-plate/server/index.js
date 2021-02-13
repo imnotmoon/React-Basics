@@ -36,6 +36,8 @@ mongoose.connect(config.mongoURI, {
 
 // 회원가입을 위한 라우트
 app.post('/api/users/register', (req, res) => {
+
+    console.log(req.body)
     
     // 회원 가입할때 필요한 정보들을 client에서 가져오면
     // 그것들을 데이터베이스에 넣어준다.
