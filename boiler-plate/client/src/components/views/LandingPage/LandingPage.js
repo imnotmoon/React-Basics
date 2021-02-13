@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React from 'react'
+import {withRouter} from 'react-router-dom'
 
 function LandingPage(props) {
 
     const onClickHandler = () => {
         axios.get('/api/users/logout')
         .then(response => {
-            console.log(response.data)
+            console.log("aaaa : ", response.data)
             if(response.data.success) {
                 props.history.push('/login')
             } else {
@@ -14,7 +15,6 @@ function LandingPage(props) {
             }
         })
     }
-
 
     return (
         <div style={{
@@ -31,4 +31,5 @@ function LandingPage(props) {
     )
 }
 
-export default LandingPage
+// history가 react-router-dom을 사용해서
+export default withRouter(LandingPage);
