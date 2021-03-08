@@ -1,12 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-import TodoList from './TodoList'
+import Button from './Button3'
+import Box from './Box4'
 
 function App() {
   console.log(`NODE_ENV = ${process.env.NODE_ENV}`)
   return (
     <div className="App">
-      <TodoList />
+      <Button size="big" />
+      <Button size="small" />
+      <Box size="big" />
+      <Box size="small" />
     </div>
   );
 }
