@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Rooms from './Rooms';
 
 function App() {
+
+  // Link : a태그와 유사한 버튼. to로 href 표현
+  // Router : 현재 url matching에 따른 선택적 렌더링. component에 매핑된 컴포넌트는 내부적으로 matching 객체 사용가능.
   return (
     <BrowserRouter>
       <div style={{ padding: 20, border: '5px solid gray' }}>
