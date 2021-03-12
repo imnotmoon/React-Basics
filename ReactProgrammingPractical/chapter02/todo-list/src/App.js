@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState } from 'react'
 import Title from './Title'
+import MyComponent from './useEffectTest'
 
 function App() {
 
@@ -53,6 +54,11 @@ function App() {
         <Title title={`그냥 숫자 : ${count }`} />
         <button onClick={onCount}>증가</button>
       </div>
+
+      <br/>
+      <br/>
+
+      <MyComponent />
     </div>
   );
 }
