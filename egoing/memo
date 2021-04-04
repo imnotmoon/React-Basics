@@ -205,3 +205,4 @@ export default createStore( function (state, action) {
 2. store.subscribe() 함수를 컴포넌트 렌더시에 실행 (useEffect)
 3. subscribe() 함수의 인자는 구독 시에 행할 action을 정의하는 콜백
 
+
