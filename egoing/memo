@@ -171,3 +171,37 @@ react server side rendering
 react native
     네이티브 앱을 만들 수 있다.
     하나의 코드로 모든 플랫폼에서 동작하는 애플리케이션을 만들 수 있다.
+
+
+
+
+
+
+
+Redux Codes
+
+import { createStore } from ‘redux’;
+- 리덕스 사용에 필요한 createStore 함수를 임포트
+
+export default createStore( function (state, action) {
+	// state의 조작
+	if ( action.type === ‘노티피케이션 이름’) {
+		return newState
+	}
+	// 기본 리턴값
+	return state;
+}
+- createStore() 함수의 인자는 “REDUCER”
+- 리듀서의 리턴값은 조작 후 새로 생성된 state
+- 노티피케이션의 이름에 따라 다른 로직을 먹일 수 있음
+
+노티피케이션 전송
+1. store 객체 import
+2. store.dispatch(state로 사용할 object)
+    1. 디스패치 함수를 통해 방송 등록
+
+노티피케이션 수신
+1. store 객체 import
+2. store.subscribe() 함수를 컴포넌트 렌더시에 실행 (useEffect)
+3. subscribe() 함수의 인자는 구독 시에 행할 action을 정의하는 콜백
+
