@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
+import './App.css'
 
 function App() {
     return (
-        <div>
+        <div className="App">
             <Form />
             <Form2 />
             <br />
