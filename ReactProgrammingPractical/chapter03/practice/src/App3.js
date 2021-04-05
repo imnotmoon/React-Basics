@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef, useMemo } from 'react'
+import React, { useContext, useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import './App.css'
 
 const UserContext = React.createContext();
@@ -13,6 +13,7 @@ function App3() {
             <ParentComponent />
             <Profile />
             <Profile2 />
+            <Profile3 />
         </div>
     )
 }
@@ -111,6 +112,38 @@ function Mycomponent({ v1, v2 }) {
 
     return (
         <p>the value is {value}</p>
+    )
+}
+
+
+// useCallback
+// useMemo가 함수의 반환값같이 어떤 값을 저장하는거라면
+// useCallback은 함수 자체를 저장한다 + dependency가 변하면 함수도 다시 정의
+
+// 가상의 컴포넌트
+const UserEdit = ({ onSave, setName, setAge }) => <div></div>
+
+const Profile3 = () => {
+    const [name, setName] = useState('');
+    const [age, setAge] = useState(20);
+
+    const saveToServer = () => {
+        // 가상의 함수
+    }
+
+    const onSave = useCallback(() => {
+        saveToServer(age, name)
+    }, [age, name])
+
+    return (
+        <div>
+            <p>{`name is ${name}`}</p>
+            <p>{`age is ${age}`}</p>
+
+            {/* useCallback이 없으면 onSave에 함수를 직접 넣을거고 */}
+            {/* 그러면 불필요한 렌더링이 계속 일어남 */}
+            <UserEdit onSave={onSave} setName={setName} setAge={setAge} />
+        </div>
     )
 }
 
