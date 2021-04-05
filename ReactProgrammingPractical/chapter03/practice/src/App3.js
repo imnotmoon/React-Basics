@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef, useMemo } from 'react'
 import './App.css'
 
 const UserContext = React.createContext();
@@ -93,6 +93,24 @@ const Profile2 = () => {
                 setAge(age)
             }}>나이 변경</button>
         </div >
+    )
+}
+
+
+// useMemo
+// 캐싱 + dependency
+
+function Mycomponent({ v1, v2 }) {
+    const runExpensiveJob = (a, b) => {
+        // 계산량이 굉장히 많은 함수라고 치자..
+    }
+    // 첫번째 인자 : 함수
+    // 두번째 인자 : dependency 배열
+    // dependency가 바뀌지 않는 이상 함수의 '값'만 기억한다
+    const value = useMemo(() => runExpensiveJob(v1, v2), [v1, v2])
+
+    return (
+        <p>the value is {value}</p>
     )
 }
 
