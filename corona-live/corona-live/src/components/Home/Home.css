@@ -1,0 +1,27 @@
+div {
+    margin: 0px
+}
+.overview {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+}
+
+.box {
+    background-color: #191f2c;
+    border: 1px solid #464b55;
+    border-radius: 15px;
+    margin: 10px 0px;
+}
+
+.today__today {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0px;
+}
+
+.today__versus {
+    display: flex;
+    flex-direction: row;
+}

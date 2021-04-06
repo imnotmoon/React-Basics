@@ -1,0 +1,22 @@
+body {
+  background: #111421;
+  color: rgb(183, 193, 204);
+  border-color: rgb(200, 201, 205);
+  font-family: "Noto Sans KR", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font: inherit;
+  vertical-align: baseline;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background: rgb(16, 20, 33);
+  padding: 40px 0px;
+}
