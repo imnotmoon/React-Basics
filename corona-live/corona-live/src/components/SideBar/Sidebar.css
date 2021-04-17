@@ -43,7 +43,7 @@ em {
 
 .item__focus {
     background-color: #202533;
-    border-left: 3px solid rgb(207, 207, 207);
+    border-left: 2px solid rgb(207, 207, 207);
     font-weight: 800;
 }
 

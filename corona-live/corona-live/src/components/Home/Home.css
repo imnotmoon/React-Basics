@@ -1,4 +1,4 @@
-div {
+div, span {
     margin: 0px
 }
 .overview {
@@ -6,6 +6,30 @@ div {
     flex-direction: row;
     text-align: center;
     align-items: center;
+    justify-content: space-around;
+    padding: 3% 3%;
+}
+
+.overview__item {
+    align-content: center;
+}
+
+.overview__item__title {
+    font-weight: 500;
+    font-size: 13px;
+    color: #707882;
+}
+
+.overview__item__count {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.overview__item__up {
+    border: 1px solid #464b55;
+    border-radius: 20px;
+    margin-top: 3px;
+
 }
 
 .box {
@@ -15,13 +39,41 @@ div {
     margin: 10px 0px;
 }
 
+.today {
+    height: 170px;
+}
+
 .today__today {
     display: flex;
     flex-direction: row;
     margin-top: 0px;
+    height: 100px;
 }
 
 .today__versus {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
+    font-size: 14px;
+}
+
+.today__versus div {
+    width: 50%px;
+}
+
+.today__today__count {
+    width: 30%;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.versus__smallbox {
+    font-size: 13px;
+    padding: 3px 7px;
+    display: flex;
+    justify-content: space-between;
+    color: #eb5374;
+    background-color: #7e31423b;
+    border-radius: 20px;
 }
