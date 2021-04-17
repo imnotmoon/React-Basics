@@ -1,6 +1,7 @@
 import React from 'react'
 import './Home.css'
 import Today from '../Today/Today'
+import Chart from './Chart'
 
 function Home() {
     return (
@@ -30,6 +31,9 @@ function Home() {
 
             {/* TODAY */}
             <Today />
+
+            {/* Chart */}
+            <Chart />
         </div>
     )
 }
