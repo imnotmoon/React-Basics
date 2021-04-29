@@ -17,4 +17,4 @@ export default function AddNumber({ onClick }) {
     )
 }
 
-//! Container Component
+//! Presentational Component
