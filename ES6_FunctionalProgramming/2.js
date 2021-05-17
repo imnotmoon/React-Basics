@@ -93,3 +93,13 @@ const all = document.querySelectorAll("*");
 console.log(all[Symbol.iterator]());
 
 for (const a of all) console.log(a);
+
+
+// 전개연산자
+// 전개연산자도 마찬가지로 이터러블 / 이터레이터 프로토콜을 따른다
+const a = [1, 2];
+console.log([...a, ...[3, 4]])
+// [1, 2, 3, 4]인 하나의 Array가 나온다
+
+a[Symbol.iterator]() = null;
+// 위 코드를 실행하고 다시 a에 대해 전개연산자를 사용하면 통하지 않는다.
