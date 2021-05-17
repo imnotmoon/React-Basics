@@ -58,3 +58,38 @@ map.keys();
 // 여기서 재밌는건 map.keys()로 나온 이터레이터에 또 [Symbol.iterator]를 뽑아보면 또 이터레이터가 나온다
 let keys = map.keys();
 let keys_iter = keys[Symbol.iterator]();
+
+// 사용자 정의 이터레이터 / 이터러블 프로토콜
+const iterable = {
+	[Symbol.iterator]() {
+		let i = 3;
+		return {
+			next() {
+				return i == 0 ? { done: true } : { value: i--, done: false };
+			},
+			[Symbol.iterator]() {
+				return this;
+			},
+		};
+	},
+};
+
+const iterator = iterable[Symbol.iterator]();
+console.log(iterator.next());
+console.log(iterator.next());
+
+for (const a of iterable) log(a);
+for (const a of iterator) log(a);
+
+// 이 이터러블은 순회가 가능하다 == for...of 문을 통해 순회가 가능하다.
+// 단 모든 iterable / iterator 프로토콜의 솏성을 구현하지는 못했다.
+// well-firmed 이터레이터는 자기 자신을 끊임없이 반환하고 어디서든 이전 상태를 기억해서 다음 순회 내용을 이어나간다.
+// 따라서 자기 자신을 반환해줘야 하므로 [Symbol.iterator]() { return this } 코드를 추가해준다.
+
+// 이터러블을 순회해도 순회가 되고 이터레이터를 순회해도 순회가 되고 어디서든 다시 호출했을때 자기 자신의 순회내용을 기억해야 한다.
+
+// 브라우저에 구현되어있는 DOM들도 이터러블 / 이터레이터 프로토콜을 따르고 있다
+const all = document.querySelectorAll("*");
+console.log(all[Symbol.iterator]());
+
+for (const a of all) console.log(a);
