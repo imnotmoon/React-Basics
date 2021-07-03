@@ -107,3 +107,10 @@ console.log(reduce(add, 0, [1, 2, 3, 4, 5]))    // 15
 //* reduce 2
 // reduce는 외부함수에 축약과정을 완전히 위임한다.
 console.log(reduce((total_price, product) => total_price + product.price, 0, products))
+
+
+//* map+filter+reduce 중첩 사용과 함수형 사고
+// 함수형 프로그래밍을 할때 평가값을 아무거나 미리 넣어보고
+// 해당 평가값을 만드는 함수를 순서대로 넣어준다
+// 이러면 좀 빠르다
+// top-down 같다.
