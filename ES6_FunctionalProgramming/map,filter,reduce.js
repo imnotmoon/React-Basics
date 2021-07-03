@@ -29,7 +29,7 @@ const map = (f, iter) => {
 
 
 //* 이터러블 프로토콜을 따른 map의 다형성1
-document.querySelectorAll('*')
+// document.querySelectorAll('*')
     // 을 통해서 나온 결과는 map으로 돌릴수가 없다. iterable 프로토콜을 따르기 때문.
     // document.querySelector는 array를 상속받은 객체가 아니어서
     // map 함수가 prototype에 없다.
@@ -46,4 +46,26 @@ const it = m[Symbol.iterator]()
 // console.log(it.next());
 
 // 새로운 맵 객체를 다시 만들지만 map 함수를 사용해서 내부의 값을 바꿈.
-console.log(new Map(map(([k, a]) => [k, a * 2], m)))
+// console.log(new Map(map(([k, a]) => [k, a * 2], m)))
+
+
+//* filter
+// 특정 금액 이상의 상품만 걸러내는 등의 용도로 사용
+
+// 선언형
+let under20000 = []
+for(const p of products) {
+    if(p.price < 20000) under20000.push(p)
+}
+
+// filter 함수로 리팩토링
+const filter = (f, iter) => {
+    let res = [];
+    for(const a of iter) {
+        if(f(a)) res.push(a);
+    }
+    return res
+}
+
+// console.log(...filter(p => p.price < 20000, products))
+
