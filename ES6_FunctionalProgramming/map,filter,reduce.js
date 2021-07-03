@@ -52,7 +52,7 @@ const it = m[Symbol.iterator]()
 //* filter
 // 특정 금액 이상의 상품만 걸러내는 등의 용도로 사용
 
-// 선언형
+// 명령형
 let under20000 = []
 for(const p of products) {
     if(p.price < 20000) under20000.push(p)
@@ -69,3 +69,41 @@ const filter = (f, iter) => {
 
 // console.log(...filter(p => p.price < 20000, products))
 
+
+//* reduce 1
+//! 값을 축약하는 함수 (이터러블을 하나의 값으로)
+
+const nums = [1, 2, 3, 4, 5]
+
+// 명령형
+let total = 0;
+for (const n of nums) {
+    total = total + n;
+}
+console.log(total)
+
+const reduce = (f, acc, iter) => {
+    // acc가 없을 경우 처리 : iter의 첫번째 값을 acc로 사용한다.
+    if(!iter) {
+        iter = acc[Symbol.iterator]();
+        acc = iter.next().value()
+    }
+
+    for(const a of iter) {
+        acc = f(acc, a)         // 외부함수에 위임
+    }
+    return acc
+}
+const add = (a, b) => a+b;
+console.log(reduce(add, 0, [1, 2, 3, 4, 5]))    // 15
+
+//! 내부적으로는 아래와 같이 작동한다 (재귀적으로)
+// console.log(add(add(add(add(add(0, 1), 2), 3), 4), 5))
+
+// 실제 자바스크립트에서는 초기값을 생략해도 잘 돌아간다
+// 내부적으로는 iter의 첫번째 값을 꺼내서 초기값으로 생각한다
+// 0, [1, 2, 3, 4, 5] => 1, [2, 3, 4, 5]
+
+//* reduce 2
+// reduce는 외부함수에 축약과정을 완전히 위임한다.
+console.log(reduce((total_price, product) => total_price + product.price, 0, products))
