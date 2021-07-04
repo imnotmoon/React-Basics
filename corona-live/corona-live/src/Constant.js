@@ -1,1 +1,0 @@
-export let IS_DARK_MODE = false
