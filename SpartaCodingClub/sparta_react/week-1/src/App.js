@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const styles = {
+		border: "1px solid #eee",
+		padding: "20px",
+		display: "flex",
+		width: "100vw",
+		maxWidth: "400px",
+		margin: "30px auto",
+		flexDirection: "column",
+	};
+
+	return (
+		<div className="App">
+			<div style={styles}>
+				<h1 style={{ color: "green" }}>안녕하세요!</h1>
+				<hr style={{ width: "100%" }} />
+				<p style={{ textAlign: "left" }}>이름을 입력해주세요.</p>
+				<input type="text" />
+			</div>
+		</div>
+	);
 }
 
 export default App;
