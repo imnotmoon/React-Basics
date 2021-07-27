@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+## 리액트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+-   DOM은 트리 구조다
+-   DOM을 수정한다는 것 -> 돔은 트리구조이기 때문에 돔 하나 수정을 위해 모든 돔을 뒤져야 한다. 그리고 전부 수정했다.
+    -   수정된 노드의 정보를 갖고있는 부모노드가 싹다 수정된다.
+-   가상돔의 개념 등장
+    -   실제 돔이 아닌 가짜 돔이다.
+    -   스냅샷 -> 수정이 일어나면 수정이 필요한 돔만 바꿔끼운다
 
-In the project directory, you can run:
+<br/>
 
-### `npm start`
+## 라이프사이클
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+컴포넌트의 라이프사이클. 컴포넌트가 렌더링을 준비하는 순간부터, 페이지에섯 사라질 때까지
+<br/>
 
-### `npm test`
+### 생성될때
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   "Rnder" 단계 : constructor -> render
+-   "Commit" 단계 : render -> React DOM 및 refs 업데이트 -> componentDidMount
 
-### `npm run build`
+### 업데이트 할 때
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   "Render" 단계 : `setState()`/New Props/부모컴포넌트변경/forceUpdate() -> render
+-   "Commit" 단계 : render -> React DOM 및 refs 업데이트 -> componentDidUpdate
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 제거 할 때
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+내가 보는 화면에서 사라진 경우
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   "Commit" 단계 : componentWillUnmount
