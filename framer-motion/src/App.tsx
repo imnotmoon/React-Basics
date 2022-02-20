@@ -1,24 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Movie from './Movie';
+
+export type MovieType = {
+	id: number,
+	backdrop_path: string,
+	genre_ids: number[],
+	original_language: string,
+	original_title: string,
+	overview: string,
+	popularity: number,
+	poster_path: string,
+	release_date: string,
+	title: string,
+	video: boolean,
+	vote_average: number,
+	vote_count: number
+}
 
 function App() {
+
+  const [popular, setPopular] = useState<MovieType[]>([]);
+
+  useEffect(() => {
+    fetchPopular();
+  }, []);
+
+  const fetchPopular = async () => {
+    const data = await fetch(process.env.REACT_APP_TMDB_URL as string);
+		const movies = await data.json();
+		setPopular(movies.results);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+			<div className="popular-movies">
+				{popular.map((movie: MovieType) => {
+					return <Movie key={movie.id} movie={movie}/>
+				})}
+			</div>
     </div>
   );
 }
