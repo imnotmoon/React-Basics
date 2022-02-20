@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+
 import Movie from './Movie';
+import Filter from './Filter';
 
 export type MovieType = {
 	id: number,
@@ -19,8 +21,8 @@ export type MovieType = {
 }
 
 function App() {
-
   const [popular, setPopular] = useState<MovieType[]>([]);
+	const [fitlered, setFiltered] = useState([]);
 
   useEffect(() => {
     fetchPopular();
@@ -30,10 +32,12 @@ function App() {
     const data = await fetch(process.env.REACT_APP_TMDB_URL as string);
 		const movies = await data.json();
 		setPopular(movies.results);
+		setFiltered(movies.results);
   }
 
   return (
     <div className="App">
+			<Filter popular={popular} setFiltered={setFiltered} />
 			<div className="popular-movies">
 				{popular.map((movie: MovieType) => {
 					return <Movie key={movie.id} movie={movie}/>
