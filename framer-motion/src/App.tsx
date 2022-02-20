@@ -22,8 +22,8 @@ export type MovieType = {
 
 function App() {
   const [popular, setPopular] = useState<MovieType[]>([]);
-	const [fitlered, setFiltered] = useState([]);
-	const [activeGenre, setActiveGenre] = useState(0);
+	const [fitlered, setFiltered] = useState<MovieType[]>([]);
+	const [activeGenre, setActiveGenre] = useState<number>(0);
 
   useEffect(() => {
     fetchPopular();
@@ -38,9 +38,14 @@ function App() {
 
   return (
     <div className="App">
-			<Filter popular={popular} setFiltered={setFiltered} />
+			<Filter
+				popular={popular}
+				setFiltered={setFiltered}
+				activeGenre={activeGenre}
+				setActiveGenre={setActiveGenre}
+			/>
 			<div className="popular-movies">
-				{popular.map((movie: MovieType) => {
+				{fitlered.map((movie: MovieType) => {
 					return <Movie key={movie.id} movie={movie}/>
 				})}
 			</div>
