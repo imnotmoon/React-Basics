@@ -23,6 +23,7 @@ export type MovieType = {
 function App() {
   const [popular, setPopular] = useState<MovieType[]>([]);
 	const [fitlered, setFiltered] = useState([]);
+	const [activeGenre, setActiveGenre] = useState(0);
 
   useEffect(() => {
     fetchPopular();
