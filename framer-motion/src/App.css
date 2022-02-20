@@ -30,7 +30,7 @@ h2 {
 	cursor: pointer;
 }
 
-butotn.active {
+button.active {
 	background-color: rgb(65, 98, 168);
 	color: white;
 }

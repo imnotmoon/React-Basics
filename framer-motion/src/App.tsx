@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import Movie from './Movie';
 import Filter from './Filter';
@@ -44,11 +45,16 @@ function App() {
 				activeGenre={activeGenre}
 				setActiveGenre={setActiveGenre}
 			/>
-			<div className="popular-movies">
-				{fitlered.map((movie: MovieType) => {
-					return <Movie key={movie.id} movie={movie}/>
-				})}
-			</div>
+			<motion.div
+				layout
+				className="popular-movies"
+			>
+				<AnimatePresence>
+					{fitlered.map((movie: MovieType) => {
+						return <Movie key={movie.id} movie={movie}/>
+					})}
+				</AnimatePresence>
+			</motion.div>
     </div>
   );
 }

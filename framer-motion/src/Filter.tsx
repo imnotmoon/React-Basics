@@ -25,9 +25,24 @@ const Filter: React.FC<FilterProps> = ({
 
 	return (
 		<div className='filter-container'>
-			<button onClick={() => { setActiveGenre(0) }}>All</button>
-			<button onClick={() => { setActiveGenre(35) }}>Comedy</button>
-			<button onClick={() => { setActiveGenre(28) }}>Action</button>
+			<button
+				onClick={() => { setActiveGenre(0) }}
+				className={activeGenre === 0 ? "active" : ""}
+			>
+				All
+			</button>
+			<button
+				onClick={() => { setActiveGenre(35) }}
+				className={activeGenre === 35 ? "active" : ""}
+			>
+				Comedy
+			</button>
+			<button
+				onClick={() => { setActiveGenre(28) }}
+				className={activeGenre === 28 ? "active" : ""}
+			>
+				Action
+			</button>
 		</div>
 	)
 }
